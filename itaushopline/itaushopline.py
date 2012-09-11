@@ -2,11 +2,12 @@
 
 import requests
 from random import randint
+from collections import OrderedDict
 
 
 class ItauShopline(object):
     urls = {}
-    KEYS_MAP = {
+    KEYS_MAP = OrderedDict({
         'pedido': 8,
         'valor': 10,
         'observacao': 40,
@@ -23,7 +24,7 @@ class ItauShopline(object):
         'obs_1': 60,
         'obs_2': 60,
         'obs_3': 60
-    }
+    })
 
     def __init__(self, codigo, chave, **extra):
         self.codigo = codigo
@@ -91,12 +92,12 @@ class ItauShopline(object):
         return ''.join(data_rand)
 
     def clean(self):
-        for k, v in self.KEYS_MAP.items():
-
-            self.data[k] = str(self.data[k] if self.data.get(k) else '')[0:v].ljust(v, ' ')
+        for k, v in ItauShopline.KEYS_MAP.items():
+            self.data[k] = str(self.data.get(k))[0:v].ljust(v, ' ')
 
     def process(self, **data):
-        self.data = data
+        self.data = OrderedDict.fromkeys(ItauShopline.KEYS_MAP.keys(), '')
+        self.data.update(data)
 
         assert len(self.codigo) == 26, u'Tamanho do codigo da empresa diferente de 26 posições'
         assert len(self.chave) == 16, u'Tamanho da chave da chave diferente de 16 posições'
