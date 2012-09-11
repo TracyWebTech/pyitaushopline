@@ -137,9 +137,13 @@ class ItauShopline(object):
         assert len(self.chave) == 16,
                     u'Tamanho da chave da chave diferente de 16 posições'
         assert formato in ("0", "1"), u'Formato inválido'
+        assert isinstance(pedido, int), u'pedido deve ser do tipo int'
+        assert isinstance(formato, basestring),
+                    u'formato deve ser do tipo str ou unicode'
 
-        chave1 = self.algoritmo(''.join([str(int(pedido)).rjust(8, '0'), str(formato)]), self.chave)
-        chave2 = self.algoritmo(''.join([self.codigo, chave1]), self.chave_itau)
+        pedido = str(pedido).rjust(8, '0')
+        chave1 = self.algoritmo(pedido + formato, self.chave)
+        chave2 = self.algoritmo(self.codigo + chave1, self.chave_itau)
         dc = self.converte(chave2)
 
         r = requests.post(self.urls['consulta'], data={'DC': dc})
