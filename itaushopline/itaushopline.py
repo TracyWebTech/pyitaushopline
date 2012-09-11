@@ -114,10 +114,7 @@ class ItauShopline(object):
 
         self.clean()
 
-        chave1 = self.algoritmo(''.join([self.data[k] for k in ['pedido', 'valor', 'observacao',
-            'nome', 'codigo_inscricao', 'numero_inscricao', 'endereco', 'bairro', 'cep',
-            'cidade', 'estado', 'vencimento', 'url_retorno', 'obs_1', 'obs_2', 'obs_3']]), self.chave)
-
+        chave1 = self.algoritmo(''.join(self.data.values()), self.chave)
         chave2 = self.algoritmo(''.join([self.codigo, chave1]), self.chave_itau)
         self.dc = self.converte(chave2)
 
