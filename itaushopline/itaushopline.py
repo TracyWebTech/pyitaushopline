@@ -99,11 +99,13 @@ class ItauShopline(object):
         self.data = OrderedDict.fromkeys(ItauShopline.KEYS_MAP.keys(), '')
         self.data.update(data)
 
-        assert len(self.codigo) == 26, u'Tamanho do codigo da empresa diferente de 26 posições'
-        assert len(self.chave) == 16, u'Tamanho da chave da chave diferente de 16 posições'
+        assert len(self.codigo) == 26,
+                    u'Tamanho do codigo da empresa diferente de 26 posições'
+        assert len(self.chave) == 16,
+                    u'Tamanho da chave da chave diferente de 16 posições'
 
         for k, v in self.data.items():
-            assert k in self.KEYS_MAP, u'Chave não permitida'
+            assert k in ItauShopline.KEYS_MAP, u'Chave não permitida'
 
             if hasattr(self, 'clean_%s' % k):
                  v = getattr(self, 'clean_%s' % k)()
