@@ -132,8 +132,10 @@ class ItauShopline(object):
                 </HTML>""" % {'url':self.urls['boleto'], 'DC':self.dc}
 
     def sonda(self, pedido, formato):
-        assert len(self.codigo) == 26, u'Tamanho do codigo da empresa diferente de 26 posições'
-        assert len(self.chave) == 16, u'Tamanho da chave da chave diferente de 16 posições'
+        assert len(self.codigo) == 26,
+                    u'Tamanho do codigo da empresa diferente de 26 posições'
+        assert len(self.chave) == 16,
+                    u'Tamanho da chave da chave diferente de 16 posições'
         assert formato in ("0", "1"), u'Formato inválido'
 
         chave1 = self.algoritmo(''.join([str(int(pedido)).rjust(8, '0'), str(formato)]), self.chave)
